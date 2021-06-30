@@ -13,7 +13,8 @@ exports.send_email = functions.https.onRequest((req, res) => {
       .messages()
       // .send({ from, to, subject, text, 'h:Reply-To': reply_to }, (error, body) => {
       .send(
-        { from: `${name} <${from}>`, to, subject, text },
+        { from: `${name} <${from}>`, to, subject, text, },
+        // { from: `${name} <${from}>`, to, subject, text, 'h:sender': `${name} <${from}>`, },
         (error, body) => {
           res.json({ error: body });
         }
@@ -43,7 +44,7 @@ exports.sign_up_club = functions.firestore.document('clubs/{id}')
       .messages()
       .send(
         {
-          from: '3ZERO Club <noreply@3zero.club>',
+          from: '3ZERO Club <noreply@mail.3zero.club>',
           to: email_key_person,
           subject: "3ZERO Club Registration: Complete your profile",
           template: 'welcome_3zc',
@@ -66,7 +67,7 @@ exports.sign_up_club = functions.firestore.document('clubs/{id}')
       .messages()
       .send(
         {
-          from: '3ZERO Club <noreply@3zero.club>',
+          from: '3ZERO Club <noreply@mail.3zero.club>',
           to: email_deputy_key_person,
           subject: "3ZERO Club Registration: Complete your profile",
           template: 'welcome_3zc',
@@ -89,7 +90,7 @@ exports.sign_up_club = functions.firestore.document('clubs/{id}')
       .messages()
       .send(
         {
-          from: '3ZERO Club <noreply@3zero.club>',
+          from: '3ZERO Club <noreply@mail.3zero.club>',
           to: email_y1,
           subject: "3ZERO Club Registration: Complete your profile",
           template: 'welcome_3zc',
@@ -112,7 +113,7 @@ exports.sign_up_club = functions.firestore.document('clubs/{id}')
       .messages()
       .send(
         {
-          from: '3ZERO Club <noreply@3zero.club>',
+          from: '3ZERO Club <noreply@mail.3zero.club>',
           to: email_y2,
           subject: "3ZERO Club Registration: Complete your profile",
           template: 'welcome_3zc',
@@ -135,7 +136,7 @@ exports.sign_up_club = functions.firestore.document('clubs/{id}')
       .messages()
       .send(
         {
-          from: '3ZERO Club <noreply@3zero.club>',
+          from: '3ZERO Club <noreply@mail.3zero.club>',
           to: email_y3,
           subject: "3ZERO Club Registration: Complete your profile",
           template: 'welcome_3zc',
@@ -159,7 +160,7 @@ exports.sign_up_member = functions.firestore.document('members/{id}')
       .messages()
       .send(
         {
-          from: '3ZERO Club <noreply@3zero.club>',
+          from: '3ZERO Club <noreply@mail.3zero.club>',
           to: email,
           subject: "3ZERO Club Registration: Complete your profile",
           template: 'welcome_3zc_member',
