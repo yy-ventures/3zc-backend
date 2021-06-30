@@ -1,20 +1,25 @@
 const functions = require("firebase-functions");
 const admin = require('firebase-admin')
 const mailgun = require('mailgun-js');
+const cors = require('cors')({ origin: true });
 
 admin.initializeApp()
 const db = admin.firestore()
 
-exports.send_email = functions.https.onRequest(async (req, res) => {
-  const { name, from, to, subject, text, reply_to, } = req.body
-  await mailgun({ apiKey: 'ca5c81769102a5a418d0f574881f0ef5-6e0fd3a4-76989148', domain: 'mail.3zero.club' })
-    .messages()
-    // .send({ from, to, subject, text, 'h:Reply-To': reply_to }, (error, body) => {
-    .send({ from: `${name} <${from}>`, to, subject, text }, (error, body) => {
-      res.json({ error: body });
-    }
-    );
-  res.json({ message: 'Request Accepted' });
+exports.send_email = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    const { name, from, to, subject, text } = req.body
+    await mailgun({ apiKey: 'ca5c81769102a5a418d0f574881f0ef5-6e0fd3a4-76989148', domain: 'mail.3zero.club' })
+      .messages()
+      // .send({ from, to, subject, text, 'h:Reply-To': reply_to }, (error, body) => {
+      .send(
+        { from: `${name} <${from}>`, to, subject, text },
+        (error, body) => {
+          res.json({ error: body });
+        }
+      );
+    res.json({ message: 'Request Accepted' });
+  })
 });
 
 exports.sign_up_club = functions.firestore.document('clubs/{id}')
